@@ -32,7 +32,7 @@ public class UrlTokenizerService
       dto.port = -1;
     }
 
-    if (dto.port > 2 << 16) {
+    if (dto.port >= 2 << 16 - 1) {
       dto.port = -1;
     }
 

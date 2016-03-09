@@ -55,6 +55,21 @@ public class UrlTokenizerServiceTest
   }
 
   @Test
+  public void tokenizeInputUrl_with_another_invalid_port_returns_dto_with_negative_port_number() throws Exception {
+    UrlTokensDto urlTokensDto;
+
+    urlTokensDto = service.tokenizeInputUrl("http://magic-domain.com:65535/");
+
+    assertEquals("magic-domain.com", urlTokensDto.domain);
+    assertEquals(65535, urlTokensDto.port);
+
+    urlTokensDto = service.tokenizeInputUrl("http://magic-domain.com:65536/");
+
+    assertEquals("magic-domain.com", urlTokensDto.domain);
+    assertEquals(-1, urlTokensDto.port);
+  }
+
+  @Test
   public void tokenizeInputUrl_with_invalid_port_characters_returns_empty_dto() throws Exception {
     String input = "http://magic-domain.com:<port>/";
     UrlTokensDto urlTokensDto = service.tokenizeInputUrl(input);
