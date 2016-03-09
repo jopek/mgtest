@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meteogroup Test</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Le Test</h1>
+
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="sizing-addon1">URL</span>
+                <input id="urlInput"
+                       name="urlInput"
+                       type="text"
+                       class="form-control"
+                       placeholder="enter URL to be taken apart"
+                       aria-describedby="sizing-addon1">
+            </div>
+            <button type="button" class="btn btn-default" id="submit">Submit</button>
+
+            <p />
+
+            <pre id="output" style="background-color: #eee;"> here cometh output from beyond</pre>
+        </div>
+    </div>
+
+    <script src="jquery-1.12.1.min.js"></script>
+
+    <script type="text/javascript">
+
+    $('#submit').on('click', function() {
+        var url = $('#urlInput').val();
+        var data = {'url': url};
+
+        console.log(data);
+
+        $.ajax({
+            url: '/api',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType:'json',
+            success: function(data){
+                console.log(data);
+                $( '#output' ).html(JSON.stringify(data, null, 2));
+            }
+        });
+
+    });
+
+    </script>
+</body>
+</html>
